@@ -1,22 +1,53 @@
+# ========================
+# Clash-ALL 优化配置
+# ========================
+
+# 机场节点订阅
+
 proxy-providers:
-  1.provider1:
+
+  # 1.provider1:    # 节点名称 
+  #   type: http
+  #   path: ./proxy_provider/p1.yaml           # 节点文件 p1对应provider1，如果不写本行，文件就保存在临时缓存中。
+  #   url: https://verge.dginv.click/#/register?code=oaxsAGo6    # 这行是 订阅 链接
+  #   interval: 21600         # 自动更新时间 21600(秒) / 3600 = 6小时
+  #   health-check:     # 启用健康检查。开启后 Clash 会定期检测订阅中各个节点的连通性/可用性/延迟，这些检测结果会被用到 url-test、fallback、以及自动选择策略组中
+  #     enable: true
+  #     url: https://www.gstatic.com/generate_204        #https://www.gstatic.com/generate_204 是常用的轻量探测地址（返回 HTTP 204），体积小、响应快，适合做连通性测试。
+  #     interval: 600      #健康检查的频率，单位也是秒。600 = 每 10 分钟检查一次
+  #   proxy: 直连        # 用名为 直连 的代理去请求订阅（因为 直连 是 direct，实际上是直接连接，不走上游代理）。如果订阅地址在你当前网络环境中被阻断（例如“被墙”），把 proxy 改为一个能访问该 URL 的上游节点（比如某个国外节点），可以让 Clash 成功拉取订阅。如果 proxy 指向一个不存在或未定义的代理名，会导致抓取失败。
+  #   override:      #用 来在本地对导入的节点做名称/标识等覆盖/调整（只影响本地显示，不改变远端）。常用于避免同名冲突或给节点加标签
+  #     additional-prefix: "p1 |"        # 对从这个 provider 导入的所有节点名都加前缀 "P2 |"。例 ：远端节点名 US-1 → 本地显示 P2 | US-1  方便辨别节点来源（当你有多个订阅时很有用）
+
+  翻墙机场:
     type: http
-    # 节点文件 p1对应provider1
-    path: ./proxy_provider/p1.yaml
-    # 订阅 链接
-    url: https://verge.dginv.click/#/register?code=oaxsAGo6
-    # 自动更新时间 21600(秒) / 3600 = 6小时
-    interval: 21600
-    # 节点名称前缀 p1
+    path: ./proxy_provider/fqjc.yaml
+    url: "https://www9th.ga-sub.hair/api/v1/client/subscribe?token=37c51a52ae323852c5db4c19a4c18af5"
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+    proxy: 直连
     override:
-      additional-prefix: "p1 |"
-  2.subscribe:
+      additional-prefix: "翻墙机场 |"
+
+  自建代理:
     type: http
-    path: ./proxy_provider/p2.yaml
-    url: https://verge.dginv.click/#/register?code=oaxsAGo6
-    interval: 21600
+    path: ./proxy_provider/diy.yaml
+    url: "https://raw.githubusercontent.com/impkgm/mytest/refs/heads/main/abc.txt"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 600
+    proxy: 直连
     override:
-      additional-prefix: "P2 |"
+      additional-prefix: "自建 |"
+
+
+
 
 # Global Config
 mixed-port: 7897
