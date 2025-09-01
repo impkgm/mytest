@@ -36,7 +36,6 @@ proxy-providers:
     type: http
     path: ./proxy_provider/diy.yaml
     url: "https://raw.githubusercontent.com/impkgm/mytest/refs/heads/main/abc.txt"
-    type: http
     interval: 86400
     health-check:
       enable: true
